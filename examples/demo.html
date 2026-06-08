@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1280">
+<title>Demo: HTML Slide to PPTX</title>
+<script src="https://cdn.jsdelivr.net/npm/dom-to-pptx@1.1.10/dist/dom-to-pptx.bundle.js"></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #e8e8e8; display: flex; flex-direction: column; align-items: center; padding: 40px; }
+
+/* Slide container */
+.slide {
+  width: 1280px; height: 720px;
+  background: #fff;
+  margin-bottom: 40px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0,0,0,.15);
+  border-radius: 8px;
+  padding: 60px 80px;
+  display: flex; flex-direction: column;
+  font-family: 'Segoe UI', -apple-system, sans-serif;
+  color: #222;
+}
+
+.slide h1 {
+  font-size: 52px; font-weight: 700;
+  margin-bottom: 20px;
+  letter-spacing: -0.5px;
+}
+.slide h2 {
+  font-size: 36px; font-weight: 600;
+  margin-bottom: 16px; color: #333;
+}
+.slide p {
+  font-size: 22px; line-height: 1.6;
+  color: #444; flex: 1;
+}
+.slide .cards {
+  display: flex; gap: 24px; flex: 1;
+  align-items: center;
+}
+.slide .card {
+  flex: 1; background: #f5f7fa;
+  border-radius: 12px; padding: 28px 24px;
+  height: 240px; display: flex; flex-direction: column;
+  justify-content: center;
+}
+.slide .card h3 {
+  font-size: 26px; margin-bottom: 12px; color: #1a73e8;
+}
+.slide .card p {
+  font-size: 17px; color: #555; line-height: 1.5;
+}
+
+.badge {
+  display: inline-block;
+  background: #1a73e8; color: #fff;
+  padding: 6px 18px; border-radius: 20px;
+  font-size: 15px; font-weight: 600;
+  margin-bottom: 16px; align-self: flex-start;
+}
+
+/* Cover */
+.slide.cover { background: linear-gradient(135deg, #1a73e8, #0d47a1); color: #fff; align-items: center; justify-content: center; text-align: center; }
+.slide.cover h1 { font-size: 64px; color: #fff; margin-bottom: 16px; }
+.slide.cover p { color: rgba(255,255,255,.85); font-size: 24px; }
+
+/* Section */
+.slide.section { background: #f0f4ff; align-items: center; justify-content: center; text-align: center; }
+.slide.section h2 { font-size: 44px; color: #1a73e8; }
+
+/* Download button */
+#download-btn {
+  position: fixed; bottom: 30px; right: 30px;
+  background: #1a73e8; color: #fff; border: none;
+  padding: 14px 32px; font-size: 18px; border-radius: 40px;
+  cursor: pointer; box-shadow: 0 4px 16px rgba(26,115,232,.4);
+  z-index: 1000; font-weight: 600;
+  transition: transform .2s;
+}
+#download-btn:hover { transform: scale(1.05); }
+</style>
+</head>
+<body>
+
+<!-- Cover -->
+<div class="slide cover">
+  <h1>HTML Slide → PPTX</h1>
+  <p>Convert web-native slides to editable PowerPoint presentations</p>
+  <p style="font-size:16px; margin-top:30px; opacity:.6">dom-to-pptx · Screenshot Fallback · Zero Dependency</p>
+</div>
+
+<!-- Slide 2: Features -->
+<div class="slide">
+  <h1>Features</h1>
+  <div class="cards">
+    <div class="card">
+      <h3>🎨 Editable</h3>
+      <p>Native OOXML shapes and text boxes — click any element in PowerPoint to edit directly.</p>
+    </div>
+    <div class="card">
+      <h3>📸 Pixel-Perfect</h3>
+      <p>Screenshot fallback preserves every pixel when layout fidelity matters more than editability.</p>
+    </div>
+    <div class="card">
+      <h3>🚀 Zero Setup</h3>
+      <p>No Python, no CLI, no dependencies. Open the HTML and click Download.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Slide 3: How It Works -->
+<div class="slide">
+  <h1>How It Works</h1>
+  <div class="cards">
+    <div class="card" style="flex:1.2">
+      <h3>Primary Path</h3>
+      <p>HTML slides → dom-to-pptx (CDN JS library) → Native PPTX shapes & text boxes → Editable in PowerPoint</p>
+    </div>
+    <div class="card" style="flex:.8">
+      <h3>Fallback Path</h3>
+      <p>HTML slides → Headless Chrome screenshots → python-pptx assembly → Image-based PPTX</p>
+    </div>
+  </div>
+</div>
+
+<!-- Slide 4: Design Principles -->
+<div class="slide">
+  <h1>Design Principles</h1>
+  <p>Feel over form — a slide is "饱满" (full) when its content is vertically substantial, regardless of layout type.</p>
+  <p>Padding compensates for content volume: heavy content needs ~30px, light content needs ~60px.</p>
+  <p>When a slide feels thin, add context instead of forcing format changes.</p>
+</div>
+
+<!-- Slide 5: Section -->
+<div class="slide section">
+  <h2>Try It Now</h2>
+  <p style="font-size: 22px; color: #555;">Click the Download button → open in PowerPoint → edit everything</p>
+</div>
+
+<!-- Slide 6: Credits -->
+<div class="slide" style="justify-content: center; align-items: center; text-align: center;">
+  <div class="badge">MIT Licensed</div>
+  <h1>html-slide-to-pptx</h1>
+  <p style="max-width: 600px; color: #666; font-size: 18px;">
+    An OpenClaw agent skill. Built with dom-to-pptx and python-pptx.<br>
+    Open source and free to use.
+  </p>
+</div>
+
+<!-- Download button -->
+<button id="download-btn" onclick="doExport()">⬇ Download PPTX</button>
+
+<script>
+function doExport() {
+  const slides = document.querySelectorAll('.slide');
+  domToPptx.exportToPptx(Array.from(slides), {
+    fileName: 'demo.pptx',
+    layout: 'LAYOUT_16x9',
+    autoEmbedFonts: false,
+    svgAsVector: false
+  }).then(() => {
+    console.log('PPTX downloaded');
+  }).catch(e => {
+    alert('Export failed. Try the screenshot fallback:\npython scripts/screenshot_to_pptx.py http://127.0.0.1:8080/examples/demo.html --output demo.pptx');
+  });
+}
+</script>
+</body>
+</html>
