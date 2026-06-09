@@ -86,7 +86,20 @@ def screenshot_to_pptx(html_url, output_path, chrome_port=9225):
     slides = json.loads(r["result"]["value"])
     print(f"Found {len(slides)} slides")
 
-    # ---- 4. Screenshot each slide ----
+    # ---- 4. Hide UI overlays before screenshotting ----
+    cdp("Runtime.evaluate", {
+        "expression": """
+        // Hide floating download buttons and overlays that shouldn't appear in slides
+        var els = document.querySelectorAll('#download-btn, .screenshot-hide, [data-hide-screenshot]');
+        for (var i = 0; i < els.length; i++) {
+            els[i].style.display = 'none';
+        }
+        """,
+        "returnByValue": True
+    })
+    time.sleep(0.3)
+
+    # ---- 5. Screenshot each slide ----
     for s in slides:
         idx = s['index']
         print(f"  Slide {idx} ({s['width']}x{s['height']})", end='', flush=True)
@@ -118,7 +131,7 @@ def screenshot_to_pptx(html_url, output_path, chrome_port=9225):
     proc.terminate()
     print(f"\nScreenshots saved to: {OUT_DIR}")
 
-    # ---- 5. Assemble PPTX ----
+    # ---- 6. Assemble PPTX ----
     from pptx import Presentation
     from pptx.util import Emu
 
@@ -142,7 +155,7 @@ def screenshot_to_pptx(html_url, output_path, chrome_port=9225):
     prs.save(output_path)
     print(f"PPTX saved: {output_path} ({len(images)} slides)")
 
-    # ---- 6. Cleanup temp screenshots ----
+    # ---- 7. Cleanup temp screenshots ----
     import shutil
     shutil.rmtree(OUT_DIR, ignore_errors=True)
 
