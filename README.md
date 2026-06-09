@@ -12,6 +12,13 @@ An OpenClaw agent skill that turns HTML slides into **real, editable PPTX files*
 
 一个 OpenClaw agent 技能。双路线：主路线生成可编辑 PPTX，兜底路线截图保视觉一致。
 
+<p align="center">
+  <img src="assets/cover.png" alt="Cover slide" width="400">
+  <img src="assets/features.png" alt="Features slide" width="400">
+  <br>
+  <em>Preview: Cover · Features · Closing (see <a href="examples/demo.html">demo.html</a>)</em>
+</p>
+
 ## Features
 
 | Feature | Primary (dom-to-pptx) | Fallback (screenshot) |
